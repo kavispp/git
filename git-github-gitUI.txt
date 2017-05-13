@@ -5,7 +5,7 @@
 created by UI, once created repsotiory , will get below information 
 
 ---------------
-…or create a new repository on the command line
+â€¦or create a new repository on the command line
 
 echo "# Python" >> README.md
 git init
@@ -13,11 +13,11 @@ git add README.md
 git commit -m "first commit"
 git remote add origin https://github.com/kavispp/Python.git
 git push -u origin master
-…or push an existing repository from the command line
+â€¦or push an existing repository from the command line
 
 git remote add origin https://github.com/kavispp/Python.git
 git push -u origin master
-…or import code from another repository
+â€¦or import code from another repository
 You can initialize this repository with code from a Subversion, Mercurial, or TFS project.
 --------------
 
@@ -43,5 +43,16 @@ click "ok"
 
 will get GitUI screen with git-github-gitUI.txt, when we click "git-github-gitUI.txt" file will see all the content contains by 
 that txt file
+6.Now commit here and push to see this file in server
+
+while clicking push will get pop up window: push
+here neds to give path:https://github.com/kavispp/Git-Github-GitUI   to push the file
+clcik "ok"
+Now will get msg like push successfully to server
+
+7.Now open https://github.com/kavispp, here we can see the repsotory name "Git-Github-GitUI" which is created by us
+open that , we can see git-github-gitUI.txt file and open taht file , we can see the contents as well,
+here edit or add some more lines by edit buttona and click "commit changes button" to see the changes in the local reppstiory.
+
 
 	

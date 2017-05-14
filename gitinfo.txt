@@ -5,3 +5,8 @@ git init
 git status
 git add readme.txt
 git commit or git commit -m "cimmited msg"
+git push origin
+
+
+
+git pull origin

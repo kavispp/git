@@ -1,6 +1,9 @@
 To get the information about the GIT:
+-----------------------------------------
 https://www.youtube.com/watch?v=Y9XZQO1n_7c&t=38s
 
+Basic Git commands:
+------------------
 git init
 git status
 git add readme.txt
@@ -10,3 +13,6 @@ git push origin
 
 
 git pull origin
+
+To get the information about the Master and Branch:
+---------------------------------------------------

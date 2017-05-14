@@ -44,4 +44,9 @@ click "ok"
 will get GitUI screen with git-github-gitUI.txt, when we click "git-github-gitUI.txt" file will see all the content contains by 
 that txt file
 
+6.Now commit here and push to see this file in server
+
+while clicking push will get pop up window: push
+
+
 	

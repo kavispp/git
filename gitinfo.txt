@@ -1,2 +1,7 @@
 To get the information about the GIT:
 https://www.youtube.com/watch?v=Y9XZQO1n_7c&t=38s
+
+git init
+git status
+git add readme.txt
+git commit or git commit -m "cimmited msg"

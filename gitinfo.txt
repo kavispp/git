@@ -4,6 +4,7 @@ https://www.youtube.com/watch?v=Y9XZQO1n_7c&t=38s
 
 Basic Git commands:
 ------------------
+On GUI Bash side:
 git init
 git status
 git add readme.txt
@@ -11,7 +12,10 @@ git commit or git commit -m "cimmited msg"
 git push origin
 
 
+on Resposiotry server side:
+add some commetns in file and commit changes
 
+then go to GUI-Bash side:
 git pull origin
 
 To get the information about the Master and Branch:

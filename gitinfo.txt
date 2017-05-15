@@ -9,11 +9,13 @@ git init
 git status
 git add readme.txt
 git commit or git commit -m "cimmited msg"
-git push origin
+git push origin (OR)
+git remote add <name><URL>
+then >git push <name>
 
 
 on Resposiotry server side:
-add some commetns in file and commit changes
+add some comments in file and commit changes
 
 then go to GUI-Bash side:
 git pull origin

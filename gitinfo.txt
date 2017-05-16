@@ -2,6 +2,17 @@ To get the information about the GIT:
 -----------------------------------------
 https://www.youtube.com/watch?v=Y9XZQO1n_7c&t=38s
 
+Config:
+-------
+git config --global user.name "kavispp
+Confirm that you have set the Git username correctly:
+$ git config --global user.name
+> kavispp
+To set Email address in Git:
+git config --global user.email "email@example.com"
+to confirm taht 
+git config --global user.email
+email@example.com
 Basic Git commands:
 ------------------
 On GUI Bash side:

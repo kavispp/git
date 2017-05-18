@@ -51,3 +51,369 @@ git remote add origin https://github.com/kavispp/sample.git
 git push -u origin master
 …or import code from another repository
 You can initialize this repository with code from a Subversion, Mercurial, or TFS project.
+
+###########################33
+Git info from Mohan:
+
+Installation
+sudo apt-get install git-core
+
+General commands
+git help --all
+git init
+git add . (add all files and sub dirs)
+git add -A stages All
+git add . stages new and modified, without deleted
+git add -u stages modified and deleted, without new
+git status
+git commit -m "Initial contents of public html" --author="Karats <kmmraj@gmail.com>"
+git config user.name kavimohan
+git config user.email "kmmraj@gmail.com"
+git log
+git show a391f05948 (Hash code)
+git diff a391f0594 9c0d73b8a70e (Two hashes)
+
+git rm poem.html
+git commit -m "remove poem"
+
+git mv boo.html foo.html
+git commit -m "move boo to foo"
+
+git checkout <branch|commit|files>
+
+The git checkout command serves three distinct functions: checking out files, checking out commits, and checking out branches.
+
+To view the contents: git cat-file -p 9c0d73b8a70e
+
+Reverse parse: git rev-parse 9c0d73b8a70e
+
+List all git config
+git config -l
+
+Alias
+ git config --global alias.show-graph 'log --graph --abbrev-commit --pretty=oneline'
+ git show-graph
+
+Interrogation
+git ls-files -s
+git ls-files --stage
+
+Remove: gir -rm index.html
+Restore: git revert 020b1e278f8a
+Rename: git mv old.txt new.txt
+
+Relative commit Names
+Within a single generation, the caret is used to select a different parent. Given a commit C, C^1 is the first parent, C^2 is the second parent, C^3 is the third parent, and so on
+The tilde is used to go back before an ancestral parent and select a preceding generation. Again, given the commit C, C~1 is the first parent, C~2 is the first grandparent, and C~3 is the first great-grandparent. When there are multiple parents in a generation, the first parent of the first parent is followed.
+Git supports other abbreviations and combinations as well. The abbreviated forms C^ and C~ are the same as C^1 and C~1, respectively. Also, C^^ is the same as C^1^1 and, because that means the “first parent of the first parent of commit C,” it refers to the same commit as C~2.
+
+git show-branch --more=35 | tail -10
+
+git log --pretty=short --abbrev-commit master~4..master~2
+
+To view the graphical view of commits - gitk
+
+Branches
+One reason to use hierarchical branch names is that Git, just like the Unix shell, supports wildcards. For instance, given the naming scheme bug/pr-1023 and bug/pr-17, you can select all bug branches at once with a clever and familiar shorthand.
+    git show-branch 'bug/*'
+
+Create branch: git branch prs/pr-1138
+
+To delete a local branch
+
+git branch -d the_local_branch
+To remove a remote branch (if you know what you are doing!)
+
+git push origin :the_remote_branch
+
+Branches with different commits
+Sometimes you want to specify a different commit as the start of a branch. For instance, suppose that your project creates a new branch for each reported bug and you hear about a bug in a certain release. It may be convenient to use the starting-commit parameter as an alternative to switching your working directory to the branch that represents the release.
+Normally, your project establishes conventions that let you specify a starting commit with certainty. For instance, to make a bug fix on the Version 2.3 release of your software, you might specify a branch named rel-2.3 as the starting commit:
+   git branch prs/pr-1138 rel-2.3
+
+The only commit name guaranteed to be unique is the hash ID. If you know a hash ID, you can use it directly:
+    $ git branch prs/pr-1138 db7de5feebef8bcd18c5356cb47c337236b50c13
+
+Listing Branch Names
+The git branch command lists branch names found in the repository.
+    $ git branch
+      bug/pr-1
+      dev
+    * master
+In this example, three topic branches are shown. The branch currently checked out into your working tree is identified by the asterisk. This example also shows two other branches, bug/pr-1 and dev.
+Without additional parameters, only topic branches in the repository are listed. As you’ll see in Chapter 12, there may be additional remote tracking branches in your repository. You can list those with the -r option. You can list both topic and remote branches with -a.
+
+git log ^dev ^topic ^bugfix master
+selects the commits that are in master but not in either of dev, topic and bugfix branches
+
+Branch
+git show-branch bug/*
+git checkout bug/pr-1
+
+When the changes are made already in the working directory, but you want to check in to the different directory. The check out command will warn.
+You can use flag -m to resolve this. Note- the merges should be done carefully.
+When the changes are made already in the working directory, you realize the changes should be checked in to new branch, you can use the following command
+git checkout -b new-branch start-point
+
+Clone from different branch in remote
+git clone -b karma-grunt-atpackager http://mkaratadipalayam@rndwww.nce.amadeus.net/git/scm/~mkaratadipalayam/karma-example.git
+
+Diff
+git diff (Shows the difference between working dir and index, it is used to recogonize the dirty files)
+git diff --cached (Shows the difference between index and object store) (synonym is --staged)
+git diff HEAD (Shows the diff between the wotking dir and object store, it can be used to recongonize the files that need to commited)
+
+Diff options
+-w (ignores white space)
+--color
+
+Bisect
+git bisect start
+git show-branch --more=35
+git bisect bad (it means the current commit is bad ,i.e. HEAD)
+git bisect good
+git bisect log > bisect.log
+git bisect replay bisect.log
+git branch
+git bisect reset
+
+Blame ( Show what revision and author last modified each line of a file)
+git blame 3.txt
+
+Pickaxe
+git log -Sscri --pretty=oneline --abbrev-commit 3.txt
+
+Merges
+git log --merge --left-right -p hello
+
+How Git Keeps Track of Conflicts
+How exactly does Git keep track of all the information about a conflicted merge? There are several parts:
+.git/MERGE_HEAD contains the SHA1 of the commit you’re merging in. You don’t really have to use the SHA1 yourself; Git knows to look in that file whenever you talk about MERGE_HEAD.
+.git/MERGE_MSG contains the default merge message used when you git commit after resolving the conflicts.
+The Git index contains three copies of each conflicted file: the merge base, “our” version, and “their” version. These three copies are assigned respective stage numbers 1, 2, and 3.
+The conflicted version (merge markers and all) is not stored in the index. Instead, it is stored in a file in your working directory. When you run git diff without any parameters, the comparison is always between what’s in the index with what’s in your working directory.
+To see how the index entries are stored, you can use the git ls-files plumbing command as follows:
+    $ git ls-files -s
+    100644 ce013625030ba8dba906f756967f9e9ca394464a 1       hello
+    100644 e63164d9518b1e6caf28f455ac86c8246f78ab70 2       hello
+    100644 562080a4c6518e1bf67a9f58a32a67bff72d4f00 3       hello
+The -s option to git ls-files shows all the files with all stages. If you want to see only the conflicted files, use the -u option instead.
+
+Merge
+git checkout branchname
+git merge otherbranchname
+
+git diff HEAD (git diff --ours)
+git diff MERGE_HEAD (git diff --theirs)
+git diff --base
+
+git revert master~3
+git commit --amend
+
+Aborting or Restarting a Merge
+If you start a merge operation but then decide for some reason that you don’t want to complete it, Git provides an easy way to abort the operation. Prior to executing the final git commit on the merge commit, use:
+    $ git reset --hard HEAD
+This command restores both your working directory and the index to the state immediately prior to the git merge command.
+If you want to abort or discard the merge after it has finished (that is, after it’s introduced a new merge commit), use the command:
+    $ git reset --hard ORIG_HEAD
+Prior to beginning the merge operation, Git saves your original branch HEAD in the ORIG_HEAD ref for just this sort of purpose.
+
+Git Reset
+
+Option
+
+HEAD
+
+Index
+
+Working directory
+
+--soft
+
+Yes
+
+No
+
+No
+
+-- mixed
+
+Yes
+
+Yes
+
+No
+
+-- hard
+
+Yes
+
+Yes
+
+Yes
+
+Cherry Pick
+Originally, the git cherry-pick command selected and reapplied one commit at a time. However, in later versions of Git, git cherry-pick allowed a range of commits to be selected and reapplied in a single command. For example, the following command:
+    # on branch master
+    $ git cherry-pick X..Z
+would apply new commits X', Y', and Z' on the master branch. This is particularly handy in porting or moving a large sequence of commits from one line of development to another without necessarily using the entire source branch at one time.
+
+Rebase (moving the branch base from one commit to another)
+git checkout targetbranch
+git rebase sourcebranch
+or
+git rebase sourcebranch targetbranch
+
+git rebase --onto master maint^ feature
+(this moves the commits happened in feature branch which is forked from maint branch to master)
+
+Stash
+
+if conflict occurs, use git rebase --continue, to skip git rebase --skip, to abort git rebase --abort
+
+$ git stash save / $ git stash save "WIP: Doing real work on my stuff"
+
+# edit high-priority change
+$ git commit -a -m "Fixed High-Priority issue"
+
+$ git stash pop
+
+# ... normal development process interrupted ...
+
+    # Create new branch on which current state is stored.
+    $ git checkout -b saved_state
+    $ git commit -a -m "Saved state"
+
+    # Back to previous branch for immediate update.
+    $ git checkout master
+
+    # edit emergency fix
+    $ git commit -a -m "Fix something."
+
+    # Recover saved state on top of working directory.
+    $ git checkout saved_state
+    $ git reset --soft HEAD^
+
+    # ... resume working where we left off above ...
+That process is sensitive to completeness and attention to detail. All of your changes have to be captured when you save your state, and the restoration process can be disrupted if you forget to move your HEAD back as well.
+
+$ git show-branch stash
+
+git stash apply
+git stash drop
+
+git stash branch <branchname>
+
+Reflog
+git reflog
+
+git log 'HEAD@{30 minutes ago}'
+git log 'HEAD@{1 hour ago}' / git log HEAD@{1-hour-ago}
+ # These should all be equivalent
+    $ git log 'dev@{2 days ago}'
+    $ git log dev@{2.days.ago}
+    $ git log dev@{2-days-ago}
+
+One more concern to address. If Git is maintaining a transaction history of every operation performed on every ref in the repository, doesn’t the reflog eventually become huge?
+Luckily, no. Git automatically runs a garbage collection process occasionally. During this process, some of the older reflog entries are expired and dropped. Normally, a commit that is otherwise not referenced or reachable from some branch or ref will be expired after a default of 30 days, and commits that are reachable expire after a default of 90 days.
+If that schedule isn’t ideal, the configuration variables gc.reflogExpireUnreachable and gc.reflogExpire, respectively, can be set to alternate values in your repository. You can use the command git reflog delete to remove individual entries, or use the command git reflog expire to directly cause entries older than a specified time to be immediately removed. It can also be used to forcefully expire the reflog.
+    $ git reflog expire --expire=now --all
+    $ git gc
+
+Read more on man git-rev-parse
+
+Remote Repositories
+
+git fetch
+retrives from remote repositories
+
+git pull
+like fetch, but merges with changes in local repositories
+
+creating depot for existing clone
+git clone --bare ~kavimohan/gitworks/public_html public_html.git
+
+Make Your Own Origin Remote
+Adding orgin
+cd ~kavimohan/gitworks/public_html
+git remote add orgin /home/gitdepot/depot
+
+git push origin master
+
+When the remote repository is on a physically different machine, a plumbing command can be used to determine the branch information of the remote repository:
+    # Go to the actual remote repo and query it
+
+    $ git ls-remote origin
+
+git pull
+
+The git pull operation is fundamentally two steps, each implemented by a separate Git command. Namely, git pull implies git fetch followed by either git merge or git rebase. By default, the second step is merge because this is almost always the desired behavior.
+
+Sometimes you may want to execute the git fetch and git merge as two separate operations. For example, you may want to fetch updates into your repository to inspect them but not necessarily merge immediately. In this case, you can simply perform the fetch, and then perform other operations on the remote-tracking branch such as git log, git diff, or even gitk. Later, when you are ready (if ever!), you may perform the merge at your convenience.
+
+sudo git push origin master
+
+Local is master and remote is orgin/master.
+remove remote: git branch -r -d orgib/bug-fix/pr-1
+
+To purne unused repos in local, to be in sync with remote
+git remote update  --prune
+Rename : git remote rename defect bug
+--- all the defect/pr-* will  be renamed to bug/pr-*
+
+$ git fetch
+    remote: Counting objects: 9, done.
+    remote: Compressing objects: 100% (6/6), done.
+    remote: Total 6 (delta 4), reused 0 (delta 0)
+    Unpacking objects: 100% (6/6), done.
+    From example.com:SomeRepo
+       b1a68a8..b722324  ver2  -> origin/ver2
+
+    $ git status
+    # On branch ver2
+    # Your branch is behind 'origin/ver2' by 2 commits, and can be fast-forwarded.
+
+ To see which commits you have in master that are not in origin/master, use a command like this:
+    $ git log origin/master..master
+
+A push that names only a source is just a shorthand for using the same name for both the source and destination ref name. A push that names both a source and a destination ref that are different can be used to create a new destination named branch or extend an existing destination remote branch with the content from the local source branch. That is, git push origin mystuff:dev will push the local branch mystuff to the upstream repository and either create or extend a branch named dev. Thus, due to a series of default behaviors, the following commands have the same effect:
+    $ git push upstream new_dev
+    $ git push upstream new_dev:new_dev
+    $ git push upstream new_dev:refs/heads/new_dev
+Naturally, upstream would be a reference to an appropriate upstream repository and might typically be origin.
+Pushes that use a refspec with just a destination ref (i.e., no source ref) cause the destination ref to be deleted from the remote repository. To denote the ref as the destination, the colon separator must be specified:
+    $ git push origin :foo
+    To /tmp/Depot/public_html
+     - [deleted]         foo
+
+If that :branch form causes you heartache, you can use a syntactically equivalent form:
+    $ git push origin --delete foo
+
+So what about renaming a remote branch? Unfortunately, there is not a simple solution. The short answer is create a new upstream branch with the new name and then delete the old branch. That’s easy enough to do using the git push commands as shown previously.
+    # Create new name at exiting old commit
+    $ git branch new origin/old
+    $ git push origin new
+
+    # Remove the old name
+    $ git push origin :old
+But that’s the easy and obvious part. Now what are the distributed implications? Do you know who has a clone of the upstream repository that was just modified out from underneath them? If you do, they could all just fetch and remote prune to get their repositories updated. But if you don’t, then all those other clones will suddenly have dangling tracking branches. And there’s no real way to get them renamed in a distributed way.
+Bottom line here: this is just a variant on the “Be careful how you rewrite history” theme.
+
+Search
+If you want to get the version of a file from a commit and you don’t know its SHA1, but you do happen to know some text from its commit log message, you can use this searching technique to obtain it:
+    $ git checkout :/"Fix PR-1705" main.c
+The youngest commit found is used.
+
+fsck
+git fsck
+
+Remove Left-Over Editor Files
+$ git filter-branch --tree-filter 'rm -f *~' -- --all
+
+whatchanged
+git whatchanged --since="three days ago" --oneline
+git whatchanged ORIG_HEAD..HEAD --oneline Makefile
+
+grep
+git whatchanged ORIG_HEAD..HEAD --oneline Makefile
+git grep -l git-grep -- Documentation

@@ -34,7 +34,7 @@ git pull origin
 To get the information about the Master and Branch:
 ---------------------------------------------------
 
-Once create the New repsoitory in GitHUB , will get below information:
+Once create the New repsoitory in GitHUB , will get below information
 -----------------------------------------------------------------------
 
 or create a new repository on the command line
